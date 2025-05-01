@@ -1,0 +1,20 @@
+# Current time Fri Dec  6 15:59:05 2024
+# ModelSim DE Stack Trace
+# Program = vish
+# Id = "2024.2"
+# Version = "2024.05"
+# Date = "May 20 2024"
+# Platform = "linuxpe"
+# 0    0xf7b2b107: 'strlen + 0x37' in '/lib/libc.so.6'
+# 1    0x0828764c: '<unknown (@0x828764c)>'
+# 2    0x08288bd8: 'scan_value + 0x748' in '/tools/mentor/ModelSim/2024.2/modelsim_dlx/linuxpe/vish'
+# 3    0x08288d31: 'wlfScanValue + 0x21' in '/tools/mentor/ModelSim/2024.2/modelsim_dlx/linuxpe/vish'
+# 4    0x0841451f: 'wlfCreateConstantValueId + 0x2f' in '/tools/mentor/ModelSim/2024.2/modelsim_dlx/linuxpe/vish'
+# 5    0x083edf4c: 'wlfiSearch + 0x4bc' in '/tools/mentor/ModelSim/2024.2/modelsim_dlx/linuxpe/vish'
+# 6    0x083a6e0e: 'wlfSearchForSignalValue + 0x6e' in '/tools/mentor/ModelSim/2024.2/modelsim_dlx/linuxpe/vish'
+# 7    0x0835eb7c: 'waveRightLeft + 0x41c' in '/tools/mentor/ModelSim/2024.2/modelsim_dlx/linuxpe/vish'
+# 8    0x0839f891: '<unknown (@0x839f891)>'
+# 9    0x085d84ca: '<unknown (@0x85d84ca)>'
+# 10   0xfffffffb: '<unknown (@0xfffffffb)>'
+# End of Stack Trace
+

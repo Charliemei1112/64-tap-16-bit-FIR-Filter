@@ -1,0 +1,1 @@
+dc_shell -64 -f datapath.tcl | tee datapath.log

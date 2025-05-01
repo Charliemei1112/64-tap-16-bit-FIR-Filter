@@ -1,0 +1,161 @@
+
+                                 PrimeTime (R)
+
+               Version U-2022.12-SP5 for linux64 - Jul 14, 2023 
+
+                    Copyright (c) 1988 - 2023 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+#################################################
+# Primetime 
+# Script for static timing analysis
+# MS 7/2015
+#################################################
+#################################################
+# Units are defined in the .lib file
+# time: ns
+#################################################
+## Global
+set sh_enable_page_mode true
+false
+set power_enable_analysis true
+Information: Checked out license 'PrimePower' (PT-019)
+true
+## Setting files/paths
+set top_level cmem
+cmem
+set verilog_files "../../dc/$top_level/$top_level.nl.v"
+../../dc/cmem/cmem.nl.v
+set search_path ". /courses/ee6321/share/ibm13rflpvt/synopsys/"
+. /courses/ee6321/share/ibm13rflpvt/synopsys/
+set link_path "* scx3_cmos8rf_lpvt_tt_1p2v_25c.db" 
+* scx3_cmos8rf_lpvt_tt_1p2v_25c.db
+## Read design
+read_db "scx3_cmos8rf_lpvt_tt_1p2v_25c.db"
+Loading db file '/courses/ee6321/share/ibm13rflpvt/synopsys/scx3_cmos8rf_lpvt_tt_1p2v_25c.db'
+1
+read_verilog $verilog_files
+1
+link_design $top_level
+Loading verilog file '/homes/user/stud/fall24/jm5912/fir-project/dc/cmem/cmem.nl.v'
+Linking design cmem...
+Warning: Unable to resolve reference to 'RF1SHD' in 'cmem'. (LNK-005)
+Information: Creating black box for memory/RF1SHD... (LNK-043)
+Information: 527 (100.00%) library cells are unused in library scx3_cmos8rf_lpvt_tt_1p2v_25c..... (LNK-045)
+Information: total 527 library cells are unused (LNK-046)
+Design 'cmem' was successfully linked.
+Information: There are 43 leaf cells, ports, hiers and 41 nets in the design (LNK-047)
+1
+## Timing Constraints
+source ./timing.tcl
+Warning: Collection '_sel3 ([get_clocks  { {clk2} }])' has inappropriate type (clock). (SEL-002)
+Error: Nothing matched for port_list (SEL-005)
+Information: Loading library 'scx3_cmos8rf_lpvt_tt_1p2v_25c' data due to accessing lib cells not linked in the current design. (LNK-041)
+Warning: Setting input delay on clock port (clk2) relative to a clock (clk2) defined at the same port. Command is ignored. (UITE-489)
+1
+1
+###################################################
+## Run STA 
+###################################################
+set rpt_file "./${top_level}_pt.rpt"
+./cmem_pt.rpt
+check_timing
+Information: Building multi voltage information for entire design. (MV-022)
+Information: Checking 'no_input_delay'.
+Information: Checking 'no_driving_cell'.
+Information: Checking 'unconstrained_endpoints'.
+Information: Checking 'unexpandable_clocks'.
+Information: Checking 'latch_fanout'.
+Information: Checking 'no_clock'.
+Information: Checking 'partial_input_delay'.
+Information: Checking 'generic'.
+Information: Checking 'loops'.
+Information: Checking 'generated_clocks'.
+Information: Checking 'pulse_clock_non_pulse_clock_merge'.
+Information: Checking 'pll_configuration'.
+Information: Checking 'voltage_level'.
+check_timing succeeded.
+1
+report_design >> ${rpt_file}
+report_reference >> ${rpt_file}
+report_constraint >> ${rpt_file}
+report_constraint -all_violators -significant_digits 4 >> ${rpt_file}
+report_timing -significant_digits 4 -delay_type min_max >> ${rpt_file}
+## Power analysis
+set power_analysis_mode "time_based"
+time_based
+read_vcd "../../qsim_dc/cmem/cmem.vcd" -strip_path "testbench/cmem_0"
+
+======================================================================
+Summary:
+Total number of nets = 41
+Number of annotated nets = 41 (100.00%)
+Total number of leaf cells = 0
+Number of fully annotated leaf cells = 0 (0.00%)
+======================================================================
+
+1
+report_switching_activity >> ${rpt_file}
+report_switching_activity -list_not_annotated >> ${rpt_file}
+update_power
+Information: Running time_based power analysis... (PWR-601)
+Information: Reading vcd file '/homes/user/stud/fall24/jm5912/fir-project/qsim_dc/cmem/cmem.vcd'
+Information: The waveform options are:
+		File name:	primetime_px.fsdb
+		File format:	fsdb
+		Time interval:	0.001ns
+		Hierarchical level:	all
+
+Information: Power analysis is running, please wait ...
+
+
+Information: analysis is done for time window (0ns - 25600ns)
+
+Information: Total simulation time = 25600.000000 ns
+1
+report_power >> ${rpt_file}
+report_power -hierarchy  >> ${rpt_file}
+write_sdf -context verilog "./cmem.sdf"
+****************************************
+Report : write_sdf ./cmem.sdf
+Design : cmem
+Version: U-2022.12-SP5
+Date   : Sun Dec 15 03:58:27 2024
+****************************************
+
+Warning: There is no delay to write in SDF. (SDF-018)
+1
+# Exiting primetime
+quit
+Information: Defining new variable 'rpt_file'. (CMD-041)
+Information: Defining new variable 'clk_uncertainty'. (CMD-041)
+Information: Defining new variable 'clk2_period'. (CMD-041)
+Information: Defining new variable 'clk2_port'. (CMD-041)
+Information: Defining new variable 'typical_wire_load'. (CMD-041)
+Information: Defining new variable 'typical_output_delay'. (CMD-041)
+Information: Defining new variable 'top_level'. (CMD-041)
+Information: Defining new variable 'verilog_files'. (CMD-041)
+Information: Defining new variable 'typical_input_delay'. (CMD-041)
+Information: Defining new variable 'clk_transition'. (CMD-041)
+Information: Defining new variable 'clk2_name'. (CMD-041)
+
+Timing updates: 1 (1 implicit, 0 explicit) (0 incremental, 1 full, 0 logical)
+Noise updates: 0 (0 implicit, 0 explicit) (0 incremental, 0 full)
+Maximum memory usage for this session: 3179.07 MB
+CPU usage for this session: 2 seconds 
+Elapsed time for this session: 10 seconds
+Diagnostics summary: 1 error, 4 warnings, 19 informationals
+
+Thank you for using pt_shell!

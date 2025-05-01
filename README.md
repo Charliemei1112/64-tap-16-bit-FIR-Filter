@@ -1,1 +1,1 @@
-# 64-tap-16-bit-FIR-Filter
+# 64-tap-16-bit-filter
